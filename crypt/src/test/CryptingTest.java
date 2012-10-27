@@ -18,8 +18,9 @@ public class CryptingTest {
 		// TODO Auto-generated method stub
 		String crypted = "";
 		String decrypted="";
+		String secret="ThisIsASecretKey";
 		try {
-			crypted=Crypting.crypt("test de", "AES");
+			crypted=Crypting.crypt("test de", "AES",secret);
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {
@@ -29,7 +30,7 @@ public class CryptingTest {
 		System.out.println("Text crypted :"+crypted);
 		
 		try {
-			decrypted=Crypting.decrypt(crypted, "AES");
+			decrypted=Crypting.decrypt(crypted, "AES",secret);
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException e) {

@@ -11,11 +11,17 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Crypting {
-	private static final byte[] keyValue = new byte[] { 'T', 'h', 'i', 's', 'I', 's', 'A', 'S', 'e', 'c', 'r', 'e', 't', 'K', 'e', 'y' };
+	private static byte[] keyValue;
 	
+	private static void initCrypt(String secret){
+		keyValue = new String(secret).getBytes();
+		System.out.println("init");
+	}
 
 		
-	public static String crypt(String textToCrypt,String transformation) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+	public static String crypt(String textToCrypt,String transformation,String secret) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+		initCrypt(secret);
+		System.out.println(new String(keyValue));
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.ENCRYPT_MODE, key);
@@ -23,8 +29,9 @@ public class Crypting {
 		return new String(encValue);
 	}
 	
-	public static String decrypt(String textToCrypt,String transformation) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
+	public static String decrypt(String textToCrypt,String transformation,String secret) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
 	{
+		initCrypt(secret);
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.DECRYPT_MODE, key);
@@ -32,15 +39,18 @@ public class Crypting {
 		return new String(decodeValue);
 	}
 	
-	public static byte[] crypt(byte[] byteToCrypt,String transformation) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+	public static byte[] crypt(byte[] byteToCrypt,String transformation,String secret) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+		initCrypt(secret);
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.ENCRYPT_MODE, key);
-		byte[] encValue = c.doFinal(byteToCrypt);
+		byte[] encValue = new byte[10];
+//		byte[] encValue = c.doFinal(byteToCrypt);
 		return encValue;
 	}
 	
-	public static byte[] decrypt(byte[] byteToDecrypt,String transformation) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+	public static byte[] decrypt(byte[] byteToDecrypt,String transformation,String secret) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
+		initCrypt(secret);
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.DECRYPT_MODE, key);
