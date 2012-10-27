@@ -23,19 +23,28 @@ public class FileEncryptor {
 		fos.write(fileContent);
 	}*/
 	
-	public static void cryptFile(String path,String transformation) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	public static void cryptFile(String path,String transformation,String secret) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
-		String parent = path.substring(0, path.lastIndexOf(File.separator));
-		String child = path.substring(path.lastIndexOf(File.separator),path.length());
+		String parent,child;
+		if(path.lastIndexOf(File.separator)>=0)
+		{
+			parent = path.substring(0, path.lastIndexOf(File.separator));
+			child = path.substring(path.lastIndexOf(File.separator),path.length());
+		}
+		else
+		{
+			parent = "";
+			child = path;
+		}
 		FileOutputStream fos = new FileOutputStream(new File(new File(parent), child+".sam"));
 		
 		System.out.println("Crypting -> "+child);
-		fos.write(cryptFileContent(path,transformation));
+		fos.write(cryptFileContent(path,transformation,secret));
 		new File(new File(parent), child).delete();
 		fos.close();
 	}
 	
-	public static void decryptFile(String path,String transformation) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
+	public static void decryptFile(String path,String transformation,String secret) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException
 	{
 		String parent = path.substring(0, path.lastIndexOf(File.separator));
 		String child = path.substring(path.lastIndexOf(File.separator),path.length());
@@ -43,21 +52,22 @@ public class FileEncryptor {
 		FileOutputStream fos = new FileOutputStream(new File(new File(parent), child));
 		
 		System.out.println("Decrypting -> "+child);
-		fos.write(decryptFileContent(path,transformation));
+		fos.write(decryptFileContent(path,transformation,secret));
 		new File(new File(parent), child+".sam").delete();
 		fos.close();
 	}
 	
-	private static byte[] cryptFileContent(String path,String transformation)
+	private static byte[] cryptFileContent(String path,String transformation,String secret)
 	{
 		File f = new File(path);
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(f);
+			System.out.println(new File(path).getTotalSpace());
 			byte fileContent[] = new byte[(int)f.length()];
 			fis.read(fileContent);
 			fis.close();
-			return Crypting.crypt(fileContent, transformation);
+			return Crypting.crypt(fileContent, transformation,secret);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -83,7 +93,7 @@ public class FileEncryptor {
 		}
 		return null;
 	}
-	private static byte[] decryptFileContent(String path,String transformation)
+	private static byte[] decryptFileContent(String path,String transformation,String secret)
 	{
 		File f = new File(path);
 		FileInputStream fis;
@@ -92,7 +102,7 @@ public class FileEncryptor {
 			byte fileContent[] = new byte[(int)f.length()];
 			fis.read(fileContent);
 			fis.close();
-			return Crypting.decrypt(fileContent, transformation);
+			return Crypting.decrypt(fileContent, transformation,secret);
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

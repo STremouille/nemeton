@@ -16,15 +16,16 @@ public class Main {
 	/**
 	 * @param args
 	 */
+	static String secret = "ThisIsASecretKey";
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// TODO Changer le mode console avec la secret key
 		try {
 			if(args.length>1)
 			{
 				if(args[0].equals("-c")||args[0].equals("-C"))
-					FolderEncryptor.cryptFolder(args[1], "aes");
+					FolderEncryptor.cryptFolder(args[1], "aes",secret);
 				else if(args[0].equals("-d")||args[0].equals("-D"))
-					FolderEncryptor.decryptFolder(args[1], "aes");
+					FolderEncryptor.decryptFolder(args[1], "aes",secret);
 			}
 			else
 			{

@@ -1,5 +1,6 @@
 package test;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -13,10 +14,10 @@ import cryption.FileEncryptor;
 public class FileEncryptorTest {
 	public static void main(String[] args)
 	{
+		String secret="ThisIsASecretKey";
 		try {
-			//FileEncryptor.cryptFile("frenchgoldrap.mp3", "aes");
-//			FileEncryptor.decryptFile("frenchgoldrap.mp3.sam", "aes");
-			FileEncryptor.decryptFile("tst1.txt.sam", "aes");
+			FileEncryptor.cryptFile("testfolder\\nemeton.jar", "aes",secret);
+//			FileEncryptor.decryptFile("tst1.txt.sam", "aes",secret);
 		} catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

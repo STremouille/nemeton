@@ -12,7 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 public class FolderEncryptor {
 	
 	
-	public static void cryptFolder(String path,String transformation) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public static void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -21,16 +21,16 @@ public class FolderEncryptor {
 			for(int i=0;i<content.length;i++)
 			{
 				
-				cryptFolder(path+File.separator+content[i], transformation);
+				cryptFolder(path+File.separator+content[i], transformation,secret);
 			}
 		}
 		else
 		{
-			FileEncryptor.cryptFile(path, transformation);
+			FileEncryptor.cryptFile(path, transformation,secret);
 		}
 	}
 	
-	public static void decryptFolder(String path,String transformation) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public static void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -38,12 +38,12 @@ public class FolderEncryptor {
 			String[] content = f.list();
 			for(int i=0;i<content.length;i++)
 			{
-				decryptFolder(path+File.separator+content[i], transformation);
+				decryptFolder(path+File.separator+content[i], transformation,secret);
 			}
 		}
 		else
 		{
-			FileEncryptor.decryptFile(path, transformation);
+			FileEncryptor.decryptFile(path, transformation,secret);
 		}
 	}
 }
