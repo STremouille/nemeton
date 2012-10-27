@@ -30,6 +30,7 @@ public class Main {
 			else
 			{
 				MyFrame mf= new MyFrame();
+				System.out.println(mf.getName());
 			}
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
