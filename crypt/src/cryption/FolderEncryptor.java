@@ -12,7 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 public class FolderEncryptor {
 	
 	
-	public static void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -30,7 +30,7 @@ public class FolderEncryptor {
 		}
 	}
 	
-	public static void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
