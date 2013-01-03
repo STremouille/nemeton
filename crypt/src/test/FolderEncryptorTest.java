@@ -14,9 +14,10 @@ public class FolderEncryptorTest {
 	
 	public static void main (String[] args)
 	{
+		FolderEncryptor fe = new FolderEncryptor();
 		String secret = "ThisIsASecretKey";
 		try {
-			FolderEncryptor.decryptFolder("testfolder", "aes",secret);
+			fe.decryptFolder("testfolder", "aes",secret);
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException | IOException e) {
