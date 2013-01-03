@@ -39,7 +39,8 @@ public class FileEncryptor {
 		FileOutputStream fos = new FileOutputStream(new File(new File(parent), child+".sam"));
 		
 		System.out.println("Crypting -> "+child);
-		fos.write(cryptFileContent(path,transformation,secret));
+		byte[] tmp = cryptFileContent(path,transformation,secret);
+		fos.write(tmp);
 		new File(new File(parent), child).delete();
 		fos.close();
 	}
@@ -70,7 +71,6 @@ public class FileEncryptor {
 			return Crypting.crypt(fileContent, transformation,secret);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

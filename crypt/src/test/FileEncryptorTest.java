@@ -15,7 +15,7 @@ public class FileEncryptorTest {
 	{
 		String secret="ThisIsASecretKey";
 		try {
-			FileEncryptor.cryptFile("testfolder\\nemeton.jar", "aes",secret);
+			FileEncryptor.cryptFile("testfolder\\tst1.txt", "aes",secret);
 //			FileEncryptor.decryptFile("tst1.txt.sam", "aes",secret);
 		} catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException e) {
 			// TODO Auto-generated catch block

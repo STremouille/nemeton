@@ -48,6 +48,7 @@ public class MyFrame extends JFrame{
 		decrypt = new JButton("Decrypt");
 		open = new JButton("File to Crypt/Decrypt");
 		passField = new JPasswordField();
+		passField.setToolTipText("Enter here your secret key");
 		fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fileChooser.setCurrentDirectory(new File(MyFrame.class.getProtectionDomain().getCodeSource().getLocation().getPath()));

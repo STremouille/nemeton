@@ -44,8 +44,8 @@ public class Crypting {
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.ENCRYPT_MODE, key);
-		byte[] encValue = new byte[10];
-//		byte[] encValue = c.doFinal(byteToCrypt);
+//		byte[] encValue = new byte[10];
+		byte[] encValue = c.doFinal(byteToCrypt);
 		return encValue;
 	}
 	
