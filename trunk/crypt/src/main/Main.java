@@ -7,9 +7,14 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.sound.midi.ControllerEventListener;
+import javax.swing.text.View;
+
+import ui.CryptController;
+import ui.CryptModel;
+import ui.CryptView;
 
 import cryption.FolderEncryptor;
-import frame.MyFrame;
 
 public class Main {
 
@@ -17,20 +22,28 @@ public class Main {
 	 * @param args
 	 */
 	static String secret = "ThisIsASecretKey";
+	
+	private static CryptModel model;
+	private static CryptView view;
+	private static CryptController controller;
+	
 	public static void main(String[] args) {
-		// TODO Changer le mode console avec la secret key
+		// init MVC
+		model = new CryptModel();
+		
+		
 		try {
 			if(args.length>1)
 			{
 				if(args[0].equals("-c")||args[0].equals("-C"))
-					FolderEncryptor.cryptFolder(args[1], "aes",secret);
+					model.cryptFolder(args[1], "aes",secret);
 				else if(args[0].equals("-d")||args[0].equals("-D"))
-					FolderEncryptor.decryptFolder(args[1], "aes",secret);
+					model.decryptFolder(args[1], "aes",secret);
 			}
 			else
 			{
-				MyFrame mf= new MyFrame();
-				System.out.println(mf.getName());
+				view = new CryptView(model);
+				controller = new CryptController(model, view);
 			}
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
