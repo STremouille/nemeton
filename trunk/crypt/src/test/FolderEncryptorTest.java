@@ -16,7 +16,7 @@ public class FolderEncryptorTest {
 	{
 		String secret = "ThisIsASecretKey";
 		try {
-			FolderEncryptor.cryptFolder("testfolder", "aes",secret);
+			FolderEncryptor.decryptFolder("testfolder", "aes",secret);
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
 				| BadPaddingException | IOException e) {
