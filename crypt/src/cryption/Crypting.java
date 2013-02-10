@@ -14,8 +14,20 @@ public class Crypting {
 	private static byte[] keyValue;
 	
 	private static void initCrypt(String secret){
-		keyValue = new String(secret).getBytes();
-		System.out.println("init");
+		keyValue = new byte[16];
+		byte[] keyValueT = new String(secret).getBytes();
+		if(keyValue.length<16)
+		{
+			for(int i=1;i<=keyValueT.length;i++)
+			{
+				keyValue[i]=keyValueT[i];
+			}
+			for(int i=keyValueT.length+1;i<=16;i++)
+			{
+				keyValue[i]=0;
+			}
+		}
+		
 	}
 
 		

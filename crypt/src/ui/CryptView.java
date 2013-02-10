@@ -3,6 +3,7 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,12 +14,17 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.filechooser.FileSystemView;
 
 import cryption.FolderEncryptor;
 
@@ -28,48 +34,47 @@ public class CryptView extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private CardLayout layout;
 	private JButton crypt,decrypt,open;
 	private JFileChooser fileChooser;
-	private JPanel southPanel,centerPanel;
-	private JLabel path;
+	private JTextField path;
 	private JPasswordField passField;
-	private String secret;
-	
+	private JOptionPane alert;
+	private JLabel cryptDecrypt;
+	private GridLayout layout;
 	private CryptModel model;
+	private ImageIcon icon;
 	
 	public CryptView(CryptModel model)
 	{
-		this.model=model;
+		this.setModel(model);
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setSize(1000, 800);
-		this.setTitle("Arc");
-		this.secret="ThisIsASecretKey";
+		this.setTitle("Nemeton");
 		
-		layout = new CardLayout();
+//		icon = (ImageIcon) FileSystemView.getFileSystemView().getSystemIcon((File.listRoots()[0]);
+
+		cryptDecrypt = new JLabel("Crypt/Decrypt");
 		crypt = new JButton("Crypt");
 		decrypt = new JButton("Decrypt");
-		open = new JButton("File to Crypt/Decrypt");
+		open = new JButton("Select file/folder");
 		passField = new JPasswordField();
 		passField.setToolTipText("Enter here your secret key");
 		fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fileChooser.setCurrentDirectory(new File(CryptView.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
-		path = new JLabel();
-		southPanel = new JPanel(new GridLayout());
-		centerPanel = new JPanel(new GridLayout());
+		path = new JTextField();
 		
-		
-		centerPanel.add(path, "Path");
-		centerPanel.add(open,"Open");
-		southPanel.add(crypt);
-		southPanel.add(passField);
-		southPanel.add(decrypt);
-		
-		this.getContentPane().add(centerPanel,BorderLayout.CENTER);
-		this.getContentPane().add(southPanel,BorderLayout.PAGE_END);
-		
+
+		layout = new GridLayout(2, 3);
+		this.getContentPane().setLayout(layout);
+		this.getContentPane().add(cryptDecrypt);
+		this.getContentPane().add(path);
+		this.getContentPane().add(open);
+		this.getContentPane().add(crypt);
+		this.getContentPane().add(passField);
+		this.getContentPane().add(decrypt);
+		this.pack();
 		this.setVisible(true);
 	}
 	
@@ -107,12 +112,28 @@ public class CryptView extends JFrame{
 		this.open = open;
 	}
 
-	public JLabel getPath() {
+	public JTextField getPath() {
 		return path;
 	}
 
-	public void setPath(JLabel path) {
+	public void setPath(JTextField path) {
 		this.path = path;
+	}
+
+	public JOptionPane getAlert() {
+		return alert;
+	}
+
+	public void setAlert(JOptionPane alert) {
+		this.alert = alert;
+	}
+
+	public CryptModel getModel() {
+		return model;
+	}
+
+	public void setModel(CryptModel model) {
+		this.model = model;
 	}
 }
 	

@@ -41,17 +41,23 @@ public class CryptController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if (!(view.getPath().getText().equals(""))) {
-				try {
-					System.out.println("Start Crypting ...");
-					model.cryptFolder(view.getPath().getText(), "AES",
-							new String(view.getPassField().getPassword()));
-					System.out.println("End Cryption");
-				} catch (InvalidKeyException | NoSuchAlgorithmException
-						| NoSuchPaddingException | IllegalBlockSizeException
-						| BadPaddingException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			String pass = new String(view.getPassField().getPassword());
+			if (pass.length() > 16 || pass.length() < 8) {
+				view.getAlert().showMessageDialog(view,
+						"Please enter a password between 8 and 16 characters");
+			} else {
+				if (!(view.getPath().getText().equals(""))) {
+					try {
+						System.out.println("Start Crypting ...");
+						model.cryptFolder(view.getPath().getText(), "AES", pass);
+						System.out.println("End Cryption");
+					} catch (InvalidKeyException | NoSuchAlgorithmException
+							| NoSuchPaddingException
+							| IllegalBlockSizeException | BadPaddingException
+							| IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
@@ -62,17 +68,24 @@ public class CryptController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			if (!(view.getPath().getText().equals(""))) {
-				try {
-					System.out.println("Start Decrypting ...");
-					model.decryptFolder(view.getPath().getText(), "AES",
-							new String(view.getPassField().getPassword()));
-					System.out.println("End Decryption");
-				} catch (InvalidKeyException | NoSuchAlgorithmException
-						| NoSuchPaddingException | IllegalBlockSizeException
-						| BadPaddingException | IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			String pass = new String(view.getPassField().getPassword());
+			if (pass.length() > 16 || pass.length() < 8) {
+				view.getAlert().showMessageDialog(view,
+						"Please enter a password between 8 and 16 characters");
+			} else {
+				if (!(view.getPath().getText().equals(""))) {
+					try {
+						System.out.println("Start Decrypting ...");
+						model.decryptFolder(view.getPath().getText(), "AES",
+								new String(view.getPassField().getPassword()));
+						System.out.println("End Decryption");
+					} catch (InvalidKeyException | NoSuchAlgorithmException
+							| NoSuchPaddingException
+							| IllegalBlockSizeException | BadPaddingException
+							| IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		}
