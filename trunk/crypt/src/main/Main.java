@@ -31,7 +31,6 @@ public class Main {
 		// init MVC
 		model = new CryptModel();
 		
-		
 		try {
 			if(args.length>1)
 			{
