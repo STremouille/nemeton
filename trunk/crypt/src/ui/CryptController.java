@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -15,8 +13,6 @@ import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class CryptController {
 	private CryptModel model;
@@ -31,7 +27,6 @@ public class CryptController {
 		view.addOpenListener(new OpenListener());
 		view.addCryptListener(new CryptListener());
 		view.addDecryptListener(new DecryptListener());
-		view.addPropertyChangeListener(new ProgressBarChangeListener());
 
 	}
 
@@ -62,32 +57,32 @@ public class CryptController {
 						"Please enter a password between 8 and 16 characters");
 			} else {
 				if (!(view.getPath().getText().equals(""))) {
+					System.out.println("Start Crypting ...");
+					final String p = view.getPath().getText();
+					final String pp = String.valueOf(view.getPassField()
+							.getPassword());
 					SwingUtilities.invokeLater(new Runnable() {
 
 						@Override
 						public void run() {
+							// TODO Auto-generated method stub
 							try {
-								System.out.println("Start Crypting ...");
-								model.cryptFolder(view.getPath().getText(),
-										"AES", new String(view.getPassField()
-												.getPassword()));
-								System.out.println("End Cryption");
+								model.cryptFolder(p, "AES", pp);
 							} catch (InvalidKeyException
 									| NoSuchAlgorithmException
 									| NoSuchPaddingException
 									| IllegalBlockSizeException
-									| BadPaddingException | IOException e1) {
+									| BadPaddingException | IOException e) {
 								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								e.printStackTrace();
 							}
-
 						}
 					});
+					System.out.println("End Cryption");
 
 				}
 			}
 		}
-
 	}
 
 	class DecryptListener implements ActionListener {
@@ -102,11 +97,11 @@ public class CryptController {
 						"Please enter a password between 8 and 16 characters");
 			} else {
 				if (!(view.getPath().getText().equals(""))) {
-
+					System.out.println("Start Decrypting ...");
 					SwingUtilities.invokeLater(new Runnable() {
+
 						@Override
 						public void run() {
-							System.out.println("Start Decrypting ...");
 							try {
 								model.decryptFolder(view.getPath().getText(),
 										"AES", new String(view.getPassField()
@@ -115,29 +110,19 @@ public class CryptController {
 									| NoSuchAlgorithmException
 									| NoSuchPaddingException
 									| IllegalBlockSizeException
-									| BadPaddingException | IOException e) {
+									| BadPaddingException | IOException e1) {
 								// TODO Auto-generated catch block
-								e.printStackTrace();
+								e1.printStackTrace();
 							}
 							System.out.println("End Decryption");
 						}
+
 					});
 
 				}
 			}
 		}
-
 	}
-	
-	class ProgressBarChangeListener implements PropertyChangeListener{
-
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-			// TODO Auto-generated method stub
-			System.out.println("property change");
-		}
-
-		}
 
 	public void adaptProgressBar(int b) {
 		JProgressBar p = new JProgressBar(0, b);
@@ -147,7 +132,15 @@ public class CryptController {
 	}
 
 	public void notifyPB() {
-		view.getProgressBar().firePropertyChange("value", view.getProgressBar().getValue(), view.getProgressBar().getValue()+1);
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				view.getProgressBar().setValue(
+						view.getProgressBar().getValue() + 1);
+			}
+		});
+
 	}
 
 }

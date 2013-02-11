@@ -2,9 +2,7 @@ package ui;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,8 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 
 public class CryptView extends JFrame{
@@ -157,9 +153,6 @@ public class CryptView extends JFrame{
 		this.model = model;
 	}
 	
-	public void addPropertyChangeListener(PropertyChangeListener l){
-		progressBar.addPropertyChangeListener("value", l);
-	}
 	
 }
 	
