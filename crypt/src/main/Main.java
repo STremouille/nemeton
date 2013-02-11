@@ -7,14 +7,12 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.sound.midi.ControllerEventListener;
-import javax.swing.text.View;
+import javax.swing.SwingUtilities;
 
 import ui.CryptController;
 import ui.CryptModel;
 import ui.CryptView;
 
-import cryption.FolderEncryptor;
 
 public class Main {
 

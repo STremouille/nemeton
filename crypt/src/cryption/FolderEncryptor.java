@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.SwingUtilities;
 
 import ui.CryptController;
 
@@ -19,7 +20,7 @@ private CryptController t;
 		this.t=t;
 	}
 	
-	public synchronized void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -35,11 +36,18 @@ private CryptController t;
 		{
 			FileEncryptor.cryptFile(path, transformation,secret);
 			if(t!=null)
-				t.notifyPB();
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						t.notifyPB();
+					}
+				});
+				
 		}
 	}
 	
-	public synchronized void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -54,7 +62,13 @@ private CryptController t;
 		{
 			FileEncryptor.decryptFile(path, transformation,secret);
 			if(t!=null)
-				t.notifyPB();
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						t.notifyPB();
+					}
+				});
 		}
 	}
 }
