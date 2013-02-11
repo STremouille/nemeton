@@ -1,32 +1,22 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.util.Properties;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.filechooser.FileSystemView;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import cryption.FolderEncryptor;
 
 public class CryptView extends JFrame{
 
@@ -42,7 +32,7 @@ public class CryptView extends JFrame{
 	private JLabel cryptDecrypt;
 	private GridLayout layout;
 	private CryptModel model;
-	private ImageIcon icon;
+	private JProgressBar progressBar;
 	
 	public CryptView(CryptModel model)
 	{
@@ -64,9 +54,10 @@ public class CryptView extends JFrame{
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		fileChooser.setCurrentDirectory(new File(CryptView.class.getProtectionDomain().getCodeSource().getLocation().getPath()));
 		path = new JTextField();
-		
+		progressBar = new JProgressBar();
+		progressBar.setStringPainted(true);
 
-		layout = new GridLayout(2, 3);
+		layout = new GridLayout(3, 3);
 		this.getContentPane().setLayout(layout);
 		this.getContentPane().add(cryptDecrypt);
 		this.getContentPane().add(path);
@@ -74,10 +65,40 @@ public class CryptView extends JFrame{
 		this.getContentPane().add(crypt);
 		this.getContentPane().add(passField);
 		this.getContentPane().add(decrypt);
+		this.getContentPane().add(new JLabel());
+		this.getContentPane().add(progressBar);
 		this.pack();
 		this.setVisible(true);
 	}
 	
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setProgressBar(JProgressBar progressBar) {
+		this.progressBar = progressBar;
+	}
+
+	public JButton getCrypt() {
+		return crypt;
+	}
+
+	public void setCrypt(JButton crypt) {
+		this.crypt = crypt;
+	}
+
+	public JButton getDecrypt() {
+		return decrypt;
+	}
+
+	public void setDecrypt(JButton decrypt) {
+		this.decrypt = decrypt;
+	}
+
+	public void setFileChooser(JFileChooser fileChooser) {
+		this.fileChooser = fileChooser;
+	}
+
 	public void addOpenListener(ActionListener ol){
 		open.addActionListener(ol);
 	}
@@ -135,6 +156,11 @@ public class CryptView extends JFrame{
 	public void setModel(CryptModel model) {
 		this.model = model;
 	}
+	
+	public void addPropertyChangeListener(PropertyChangeListener l){
+		progressBar.addPropertyChangeListener("value", l);
+	}
+	
 }
 	
 

@@ -9,10 +9,17 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import ui.CryptController;
+
 public class FolderEncryptor {
+private CryptController t;
+
+	public void setObservator(CryptController t)
+	{
+		this.t=t;
+	}
 	
-	
-	public void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public synchronized void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -27,10 +34,12 @@ public class FolderEncryptor {
 		else
 		{
 			FileEncryptor.cryptFile(path, transformation,secret);
+			if(t!=null)
+				t.notifyPB();
 		}
 	}
 	
-	public void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
+	public synchronized void decryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
 		if(f.isDirectory())
@@ -44,6 +53,8 @@ public class FolderEncryptor {
 		else
 		{
 			FileEncryptor.decryptFile(path, transformation,secret);
+			if(t!=null)
+				t.notifyPB();
 		}
 	}
 }

@@ -8,6 +8,9 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import ui.CryptController;
+import ui.CryptModel;
+
 import cryption.FolderEncryptor;
 
 public class FolderEncryptorTest {
