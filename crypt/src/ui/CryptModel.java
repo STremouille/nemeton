@@ -16,14 +16,15 @@ import cryption.FolderEncryptor;
 public class CryptModel extends FolderEncryptor{
 	private CryptController observator;
 
-	public void setObservator(CryptController observator)
-	{
-		this.observator=observator;
-	}
+	
 	public CryptModel(){
 		super();
 	}
 	
+	public void setObservator(CryptController observator)
+	{
+		this.observator=observator;
+	}
 	public void cryptFolder(String path,String transformation,String secret) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException, IOException
 	{
 		File f = new File(path);
