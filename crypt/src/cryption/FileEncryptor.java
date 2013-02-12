@@ -64,7 +64,6 @@ public class FileEncryptor {
 		FileInputStream fis;
 		try {
 			fis = new FileInputStream(f);
-			System.out.println(new File(path).getTotalSpace());
 			byte fileContent[] = new byte[(int)f.length()];
 			fis.read(fileContent);
 			fis.close();

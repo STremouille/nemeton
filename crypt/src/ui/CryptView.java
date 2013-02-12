@@ -63,9 +63,13 @@ public class CryptView extends JFrame{
 		this.getContentPane().add(decrypt);
 		this.getContentPane().add(new JLabel());
 		this.getContentPane().add(progressBar);
+		
+		
 		this.pack();
 		this.setVisible(true);
 	}
+	
+	
 	
 	public JProgressBar getProgressBar() {
 		return progressBar;

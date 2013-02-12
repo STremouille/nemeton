@@ -40,7 +40,14 @@ public class Main {
 			else
 			{
 				view = new CryptView(model);
-				controller = new CryptController(model, view);
+				SwingUtilities.invokeLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						controller = new CryptController(model, view);
+					}
+				});
+				
 			}
 		} catch (InvalidKeyException | NoSuchAlgorithmException
 				| NoSuchPaddingException | IllegalBlockSizeException
