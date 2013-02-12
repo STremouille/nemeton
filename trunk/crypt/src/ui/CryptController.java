@@ -34,7 +34,6 @@ public class CryptController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			System.out.println("Open");
 			view.getFileChooser().showOpenDialog(view.getOpen());
 			view.getPath().setText(
@@ -48,7 +47,6 @@ public class CryptController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			String pass = new String(view.getPassField().getPassword());
 			adaptProgressBar(new File(view.getPath().getText()).listFiles().length);
 			if (pass.length() > 16 || pass.length() < 8) {
@@ -65,7 +63,6 @@ public class CryptController {
 
 						@Override
 						public void run() {
-							// TODO Auto-generated method stub
 							try {
 								model.cryptFolder(p, "AES", pp);
 							} catch (InvalidKeyException
@@ -73,7 +70,6 @@ public class CryptController {
 									| NoSuchPaddingException
 									| IllegalBlockSizeException
 									| BadPaddingException | IOException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
@@ -88,7 +84,6 @@ public class CryptController {
 	class DecryptListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			String pass = new String(view.getPassField().getPassword());
 			adaptProgressBar(new File(view.getPath().getText()).listFiles().length);
 			if (pass.length() > 16 || pass.length() < 8) {
@@ -98,6 +93,7 @@ public class CryptController {
 			} else {
 				if (!(view.getPath().getText().equals(""))) {
 					System.out.println("Start Decrypting ...");
+					
 					SwingUtilities.invokeLater(new Runnable() {
 
 						@Override
@@ -111,7 +107,6 @@ public class CryptController {
 									| NoSuchPaddingException
 									| IllegalBlockSizeException
 									| BadPaddingException | IOException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 							System.out.println("End Decryption");
@@ -125,22 +120,19 @@ public class CryptController {
 	}
 
 	public void adaptProgressBar(int b) {
-		JProgressBar p = new JProgressBar(0, b);
-		p.setStringPainted(true);
-		p.setValue(0);
-		view.setProgressBar(p);
+		view.getProgressBar().setMaximum(b);
+		view.getProgressBar().setValue(0);
 	}
 
 	public void notifyPB() {
+		System.out.println("Notify");
 		SwingUtilities.invokeLater(new Runnable() {
-
+			
 			@Override
 			public void run() {
-				view.getProgressBar().setValue(
-						view.getProgressBar().getValue() + 1);
+				view.getProgressBar().setValue(view.getProgressBar().getValue() + 1);
 			}
 		});
-
 	}
 
 }

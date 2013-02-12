@@ -33,7 +33,6 @@ public class Crypting {
 		
 	public static String crypt(String textToCrypt,String transformation,String secret) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException{
 		initCrypt(secret);
-		System.out.println(new String(keyValue));
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.ENCRYPT_MODE, key);
@@ -56,7 +55,6 @@ public class Crypting {
 		Key key = new SecretKeySpec(keyValue, transformation);
 		Cipher c = Cipher.getInstance(transformation);
 		c.init(Cipher.ENCRYPT_MODE, key);
-//		byte[] encValue = new byte[10];
 		byte[] encValue = c.doFinal(byteToCrypt);
 		return encValue;
 	}
